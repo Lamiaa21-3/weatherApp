@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
               ),
             )
           : Container(
-              color: Colors.orange,
+
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
