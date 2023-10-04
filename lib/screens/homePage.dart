@@ -18,6 +18,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
 
       appBar: AppBar(
+        backgroundColor:  Theme.of(context).primaryColor,
         title: const Text("Weather"),
         actions: [
           IconButton(
@@ -42,6 +43,18 @@ class HomePage extends StatelessWidget {
             else if (state is SuccessWeatherState) {
               weatherData=  BlocProvider.of<WeatherCubit>(context).weatherModel;
               return Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                      weatherData!.getThemeColor(),
+                      weatherData!.getThemeColor()[300]!,
+                      weatherData!.getThemeColor()[100]!,
+
+                    ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+
+                    )
+                ),
 
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
