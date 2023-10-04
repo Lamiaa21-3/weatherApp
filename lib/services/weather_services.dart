@@ -16,6 +16,7 @@ class WeatherServices {
    try{
      WeatherModel weather = WeatherModel.fromJson(data);
      print('Doneeeeeeeeeeee');
+     print('cityName:$cityName');
      return weather;
    }catch(e){
      print('erorrrrrrr');

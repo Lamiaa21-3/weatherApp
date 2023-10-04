@@ -1,18 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_app/cubits/weather_cubit/weather_cubit.dart';
 import 'package:weather_app/models/weather_model.dart';
 import 'package:weather_app/provider/weather_provider.dart';
 import 'package:weather_app/services/weather_services.dart';
 
 WeatherModel? weatherData;
 
-class SearchScreen extends StatelessWidget {
-  var searchController = TextEditingController()..text;
-  String? cityName;
-  VoidCallback? updateUi;
+class SearchScreen extends StatefulWidget {
 
-  SearchScreen({this.updateUi});
+
+
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  var searchController = TextEditingController()..text;
+
+  String? cityName;
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +34,15 @@ class SearchScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: TextField(
             onSubmitted: (data) async {
-              cityName = data;
-              WeatherServices services = WeatherServices();
-              WeatherModel? weather =
-                  await services.getWeather(cityName: cityName!);
-              Provider.of<WeatherProvider>(context,listen: false).weatherData=weather;
-              updateUi!();
+              setState(() {
+                cityName = data;
+              });
 
-              Navigator.of(context).pop(weather);
+              print('data is $data');
+
+                BlocProvider.of<WeatherCubit>(context).getServices(cityName: cityName!);
+              BlocProvider.of<WeatherCubit>(context).cityName =cityName;
+              Navigator.of(context).pop(context);
             },
             controller: searchController,
             decoration: const InputDecoration(
